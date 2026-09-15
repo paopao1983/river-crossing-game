@@ -74,6 +74,7 @@ function init() {
     const { selectedCharacter, boatPassenger } = gameEngine.getState();
     if (boatPassenger && selectedCharacter) {
       gameEngine.unloadFromBoat();
+      gameEngine.loadToBoat();
     } else if (!boatPassenger && selectedCharacter) {
       gameEngine.loadToBoat();
     } else {

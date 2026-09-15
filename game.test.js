@@ -230,6 +230,19 @@ describe('GameState — unloadFromBoat', () => {
     const g = new GameState();
     assert.equal(g.unloadFromBoat(), false);
   });
+
+  it('reemplaza pasajero con unload+load en un solo paso', () => {
+    const g = new GameState();
+    g.selectCharacter('chicken');
+    g.loadToBoat();
+    g.selectCharacter('fox');
+    g.unloadFromBoat();
+    g.loadToBoat();
+    const s = g.getState();
+    assert.equal(s.boatPassenger, 'fox');
+    assert.equal(s.locations.chicken, 'left');
+    assert.equal(s.locations.fox, 'boat');
+  });
 });
 
 describe('GameState — reset', () => {
