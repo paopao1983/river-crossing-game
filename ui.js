@@ -49,27 +49,25 @@ function render() {
   // Move counter
   MoveCounter.update(moveCount);
 
-  // Win overlay
-  const overlay = document.getElementById('win-overlay');
+  // Win / Loss overlays
+  const winOverlay  = document.getElementById('win-overlay');
+  const lossOverlay = document.getElementById('loss-overlay');
   if (status === 'won') {
     document.getElementById('final-move-count').textContent = moveCount;
-    overlay.classList.remove('hidden');
+    winOverlay.classList.remove('hidden');
+    lossOverlay.classList.add('hidden');
+  } else if (status === 'lost') {
+    document.getElementById('loss-reason').textContent = gameEngine.lossReason;
+    document.getElementById('loss-move-count').textContent = moveCount;
+    lossOverlay.classList.remove('hidden');
+    winOverlay.classList.add('hidden');
   } else {
-    overlay.classList.add('hidden');
+    winOverlay.classList.add('hidden');
+    lossOverlay.classList.add('hidden');
   }
 }
 
 function init() {
-  const feedback = document.getElementById('feedback');
-  let feedbackTimer = null;
-
-  function showFeedback(msg) {
-    feedback.textContent = msg;
-    feedback.classList.remove('hidden');
-    clearTimeout(feedbackTimer);
-    feedbackTimer = setTimeout(() => feedback.classList.add('hidden'), 2500);
-  }
-
   document.getElementById('boat').addEventListener('click', () => {
     const { selectedCharacter, boatPassenger } = gameEngine.getState();
     if (boatPassenger && selectedCharacter) {
@@ -78,16 +76,16 @@ function init() {
     } else if (!boatPassenger && selectedCharacter) {
       gameEngine.loadToBoat();
     } else {
-      const result = gameEngine.cross();
-      if (!result.ok && result.reason) showFeedback('⚠️ ' + result.reason);
+      gameEngine.cross();
     }
     render();
   });
 
-  document.getElementById('play-again').addEventListener('click', () => {
-    gameEngine.reset();
-    feedback.classList.add('hidden');
-    render();
+  document.querySelectorAll('.try-again').forEach(btn => {
+    btn.addEventListener('click', () => {
+      gameEngine.reset();
+      render();
+    });
   });
 
   render();

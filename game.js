@@ -64,24 +64,26 @@ class GameState {
     next.farmer = destination;
     if (this.boatPassenger) next[this.boatPassenger] = destination;
 
-    const reason = this._unsafeReason(next);
-    if (reason) return { ok: false, reason };
-
     this.locations = next;
     this.boatSide = destination;
     this.boatPassenger = null;
     this.moveCount++;
 
+    const reason = this._unsafeReason(this.locations);
+    if (reason) { this.status = 'lost'; this.lossReason = reason; return { ok: true, reason }; }
     if (this._checkWin()) this.status = 'won';
     return { ok: true, reason: null };
   }
 
   _unsafeReason(locations) {
     const farmerSide = locations.farmer;
-    const names = { farmer: 'Farmer', fox: 'Fox', chicken: 'Chicken', grain: 'Grain' };
+    const messages = {
+      'fox-chicken':   '¡El Zorro se comió al Pollo! 🦊🐔',
+      'chicken-grain': '¡El Pollo se comió el Grano! 🐔🌾',
+    };
     for (const [a, b] of DANGEROUS_PAIRS) {
       if (locations[a] === locations[b] && locations[a] !== farmerSide) {
-        return `${names[a]} would eat the ${names[b]}!`;
+        return messages[`${a}-${b}`];
       }
     }
     return null;

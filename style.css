@@ -177,8 +177,7 @@ h1 { font-size: 1.4rem; color: #1a3a4a; }
   font-size: 1rem;
 }
 
-/* Win Overlay */
-#win-overlay {
+#win-overlay, #loss-overlay {
   position: fixed;
   inset: 0;
   background: rgba(0,0,0,0.55);
@@ -188,9 +187,9 @@ h1 { font-size: 1.4rem; color: #1a3a4a; }
   z-index: 100;
 }
 
-#win-overlay.hidden { display: none; }
+#win-overlay.hidden, #loss-overlay.hidden { display: none; }
 
-#win-message {
+#win-message, #loss-message {
   background: #fff;
   border-radius: 16px;
   padding: 2.5rem 3rem;
@@ -201,10 +200,10 @@ h1 { font-size: 1.4rem; color: #1a3a4a; }
   gap: 1rem;
 }
 
-#win-message h2 { font-size: 2rem; color: #1a3a4a; }
-#win-message p  { font-size: 1.1rem; color: #444; }
+#win-message h2, #loss-message h2 { font-size: 2rem; color: #1a3a4a; }
+#win-message p,  #loss-message p  { font-size: 1.1rem; color: #444; }
 
-#play-again {
+.try-again {
   margin-top: 0.5rem;
   padding: 0.75rem 2rem;
   font-size: 1rem;
@@ -217,25 +216,8 @@ h1 { font-size: 1.4rem; color: #1a3a4a; }
   transition: background 0.15s;
 }
 
-#play-again:hover { background: #1565c0; }
+.try-again:hover { background: #1565c0; }
 
-#feedback {
-  position: fixed;
-  bottom: 2rem;
-  left: 50%;
-  transform: translateX(-50%);
-  background: #b71c1c;
-  color: #fff;
-  padding: 0.65rem 1.4rem;
-  border-radius: 8px;
-  font-size: 0.95rem;
-  font-weight: 600;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.25);
-  z-index: 50;
-  transition: opacity 0.3s;
-}
-
-#feedback.hidden { display: none; }
 
 /* Rotate screen prompt — portrait mobile */
 #rotate-prompt {

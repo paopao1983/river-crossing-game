@@ -44,11 +44,21 @@
   </main>
 
   <!-- Win Overlay -->
-  <div id="win-overlay" class="hidden" role="dialog" aria-modal="true" aria-label="You solved it!">
+  <div id="win-overlay" class="hidden" role="dialog" aria-modal="true">
     <div id="win-message">
-      <h2>🎉 You solved it!</h2>
-      <p>You crossed everyone safely in <strong><span id="final-move-count">0</span></strong> moves.</p>
-      <button id="play-again">Play Again</button>
+      <h2>🎉 ¡Lo lograste!</h2>
+      <p>Cruzaste a todos en <strong><span id="final-move-count">0</span></strong> movimientos.</p>
+      <button class="try-again">Jugar de nuevo</button>
+    </div>
+  </div>
+
+  <!-- Loss Overlay -->
+  <div id="loss-overlay" class="hidden" role="dialog" aria-modal="true">
+    <div id="loss-message">
+      <h2>😬 ¡Ups!</h2>
+      <p id="loss-reason"></p>
+      <p>Llegaste hasta el movimiento <strong><span id="loss-move-count">0</span></strong>. ¡Inténtalo de nuevo!</p>
+      <button class="try-again">Intentar de nuevo</button>
     </div>
   </div>
 

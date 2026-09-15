@@ -60,22 +60,25 @@ class GameState {
     const next = { ...this.locations };
     next.farmer = destination;
     if (this.boatPassenger) next[this.boatPassenger] = destination;
-    const reason = this._unsafeReason(next);
-    if (reason) return { ok: false, reason };
     this.locations = next;
     this.boatSide = destination;
     this.boatPassenger = null;
     this.moveCount++;
+    const reason = this._unsafeReason(this.locations);
+    if (reason) { this.status = 'lost'; this.lossReason = reason; return { ok: true, reason }; }
     if (['farmer','fox','chicken','grain'].every(c => this.locations[c] === 'right')) this.status = 'won';
     return { ok: true, reason: null };
   }
 
   _unsafeReason(locations) {
     const farmerSide = locations.farmer;
-    const names = { farmer: 'Farmer', fox: 'Fox', chicken: 'Chicken', grain: 'Grain' };
+    const messages = {
+      'fox-chicken':   '¡El Zorro se comió al Pollo! 🦊🐔',
+      'chicken-grain': '¡El Pollo se comió el Grano! 🐔🌾',
+    };
     for (const [a, b] of DANGEROUS_PAIRS) {
       if (locations[a] === locations[b] && locations[a] !== farmerSide)
-        return `${names[a]} would eat the ${names[b]}!`;
+        return messages[`${a}-${b}`];
     }
     return null;
   }
@@ -173,23 +176,24 @@ describe('GameState — cross (BR1.1, BR2.1, BR2.2, BR4.1)', () => {
     assert.equal(g.getState().moveCount, 1);
   });
 
-  it('blocks crossing that leaves fox and chicken unsupervised (BR2.1)', () => {
+  it('crossing that leaves fox and chicken unsupervised resulta en lost (BR2.1)', () => {
     const g = new GameState();
-    const result = g.cross();
-    assert.equal(result.ok, false);
-    assert.ok(result.reason.includes('Fox'));
+    const result = g.cross(); // farmer solo → right, deja fox+chicken en left
+    assert.equal(result.ok, true);
+    assert.equal(g.getState().status, 'lost');
+    assert.ok(result.reason.includes('Zorro'));
   });
 
-  it('blocks crossing that leaves chicken and grain unsupervised (BR2.2)', () => {
+  it('crossing que deja chicken y grain solos resulta en lost (BR2.2)', () => {
     const g = new GameState();
-    g.selectCharacter('fox');
-    g.loadToBoat();
-    const result = g.cross();
-    assert.equal(result.ok, false);
-    assert.ok(result.reason.includes('Chicken'));
+    g.selectCharacter('fox'); g.loadToBoat();
+    const result = g.cross(); // farmer+fox → right, deja chicken+grain en left
+    assert.equal(result.ok, true);
+    assert.equal(g.getState().status, 'lost');
+    assert.ok(result.reason.includes('Pollo'));
   });
 
-  it('increments move counter on each successful crossing (BR4.1)', () => {
+  it('increments move counter on each crossing (BR4.1)', () => {
     const g = new GameState();
     g.selectCharacter('chicken');
     g.loadToBoat();
