@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>River Crossing Puzzle</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <h1>River Crossing Puzzle</h1>
+    <div id="move-counter">Moves: <span id="move-count">0</span></div>
+  </header>
+
+  <div id="feedback" class="hidden" role="alert"></div>
+
+  <main id="game-board">
+    <!-- Left Bank -->
+    <section id="left-bank" class="bank" aria-label="Left bank">
+      <h2>Left Bank</h2>
+      <div class="characters">
+        <button class="character" id="char-farmer" data-id="farmer" aria-label="Farmer">🧑‍🌾<span>Farmer</span></button>
+        <button class="character" id="char-fox" data-id="fox" aria-label="Fox">🦊<span>Fox</span></button>
+        <button class="character" id="char-chicken" data-id="chicken" aria-label="Chicken">🐔<span>Chicken</span></button>
+        <button class="character" id="char-grain" data-id="grain" aria-label="Grain">🌾<span>Grain</span></button>
+      </div>
+    </section>
+
+    <!-- River -->
+    <section id="river" aria-label="River">
+      <div id="boat-container" class="boat-left">
+        <button id="boat" aria-label="Boat — click to cross">
+          <span id="boat-label">⛵</span>
+          <div id="boat-passengers"></div>
+        </button>
+      </div>
+    </section>
+
+    <!-- Right Bank -->
+    <section id="right-bank" class="bank" aria-label="Right bank">
+      <h2>Right Bank</h2>
+      <div class="characters"></div>
+    </section>
+  </main>
+
+  <!-- Win Overlay -->
+  <div id="win-overlay" class="hidden" role="dialog" aria-modal="true" aria-label="You solved it!">
+    <div id="win-message">
+      <h2>🎉 You solved it!</h2>
+      <p>You crossed everyone safely in <strong><span id="final-move-count">0</span></strong> moves.</p>
+      <button id="play-again">Play Again</button>
+    </div>
+  </div>
+
+  <script src="game.js"></script>
+  <script src="counter.js"></script>
+  <script src="ui.js"></script>
+</body>
+</html>
