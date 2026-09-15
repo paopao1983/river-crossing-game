@@ -1,0 +1,20 @@
+{
+  "stage": "domain-design",
+  "upstream_ids": ["FR1.1", "FR1.2", "FR2.1", "FR2.2", "FR2.3", "FR2.4", "FR2.5", "FR3.1", "FR3.2", "FR4.1", "FR4.2", "FR5.1", "FR5.2", "FR5.3"],
+  "coverage": [
+    { "id": "FR1.1", "status": "OK", "target": "UIRenderer" },
+    { "id": "FR1.2", "status": "OK", "target": "UIRenderer" },
+    { "id": "FR2.1", "status": "OK", "target": "UIRenderer + GameEngine.selectCharacter()" },
+    { "id": "FR2.2", "status": "OK", "target": "UIRenderer" },
+    { "id": "FR2.3", "status": "OK", "target": "UIRenderer + GameEngine.loadToBoat()" },
+    { "id": "FR2.4", "status": "OK", "target": "UIRenderer + GameEngine.cross()" },
+    { "id": "FR2.5", "status": "OK", "target": "GameEngine.cross() + UIRenderer" },
+    { "id": "FR3.1", "status": "OK", "target": "GameEngine.isValid()" },
+    { "id": "FR3.2", "status": "OK", "target": "GameEngine.isValid() + UIRenderer (blocks action)" },
+    { "id": "FR4.1", "status": "OK", "target": "MoveCounter + GameState.moveCount" },
+    { "id": "FR4.2", "status": "OK", "target": "GameEngine.cross() increments GameState.moveCount" },
+    { "id": "FR5.1", "status": "OK", "target": "GameEngine.isWon()" },
+    { "id": "FR5.2", "status": "OK", "target": "UIRenderer (win overlay) + GameState.moveCount" },
+    { "id": "FR5.3", "status": "OK", "target": "UIRenderer (play-again button) + GameEngine.reset()" }
+  ]
+}
